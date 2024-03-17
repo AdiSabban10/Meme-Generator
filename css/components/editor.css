@@ -1,18 +1,29 @@
-.meme-editor {
-    display: flex;
+
+.main-editor {
+    display: grid;
+    grid-template-columns:  
+        minmax(10px, 1fr) 
+        minmax(auto, 450px) 
+        minmax(10px, 1fr) 
+        minmax(auto, 450px) 
+        minmax(10px, 1fr);  
     
 }
 
 canvas {
-    margin: 20px;
+    /* margin: 20px; */
+    grid-column: 2;
 	background-color: white;
 	border: 1px solid lightgray;
     border-radius: 3em;
 }
 
 .editor-tools {
+    grid-column: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
     background-color: rgb(80, 75, 75);
-    width: 450px;
-    height: 450px;
     border-radius: 3em;
 }

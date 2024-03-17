@@ -6,22 +6,30 @@
     <link rel="stylesheet" href="css/styles.css" /><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
 </head>
-<body>
+<body onload="onInit()">
     <header class="main-header">
         <div class="logo">Meme Generator</div>
-        <button>Gallery</button>
+        <button class="btn-gallery" onclick="onInit()">Gallery</button>
     </header>
     
-    <section class="meme-gallery"></section>
-    <section class="meme-editor">
-        <main>
+    <section class="gallery-page">
+        <section class="gallery-container"></section>
+    </section>
+    <section class="editor-page hidden">
+        <main class="main-editor">
             <canvas width="450" height="450"></canvas>
-            <section class="editor-tools"></section>
+            <section class="editor-tools">
+                <input type="text" class="txt" placeholder="Add text here"
+                 oninput="onAddTxt(this)">
+            </section>
 
         </main>
     </section>
    
     <script src="js/main.js"></script>
+    <script src="js/services/gallery.service.js"></script>
+    <script src="js/services/meme.service.js"></script>
+    <script src="js/gallery.controller.js"></script>
     <script src="js/meme.controller.js"></script>
 </body>
 </html>

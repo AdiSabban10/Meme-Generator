@@ -1,16 +1,8 @@
 'use strict'
 
-var gImgs = [{ id: 1, url: 'img/5.jpg', keywords: ['funny', 'cat'] }]
-var gMeme = {
-    selectedImgId: 5,
-    selectedLineIdx: 0,
-    lines: [
-        {
-            txt: 'I sometimes eat Falafel',
-            size: 20,
-            color: 'red'
-        }
-    ]
+function onInit() {
+    document.querySelector('.gallery-page').classList.remove('hidden')
+    document.querySelector('.editor-page').classList.add('hidden')
+    renderGallery()
+    // renderMeme()
 }
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
-
