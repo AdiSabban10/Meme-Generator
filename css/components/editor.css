@@ -21,9 +21,21 @@ canvas {
 .editor-tools {
     grid-column: 4;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     
     background-color: rgb(80, 75, 75);
     border-radius: 3em;
 }
+
+.btn-download {
+    background-color: rgb(80, 14, 141);
+    color: white;
+}
+
+.btn-download a {
+    color: white;
+    text-decoration: none;
+}
+
