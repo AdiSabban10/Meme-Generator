@@ -22,11 +22,23 @@
             <section class="editor-tools">
                 <input type="text" class="txt" placeholder="Add text here"
                  oninput="onAddTxt(this)">
+                 <div class="editor-font">
+                    <button class="btn-font color-picker">
+                        <i class="fa-solid fa-brush"></i>
+                        <input type="color" class="btn-font-color" name="fontColor" 
+                        value="#000000" oninput="onSetOutlineColor(this)"/>
+                    </button>
+                    <button class="btn-font color-picker">
+                        <input type="color" class="btn-font-color" name="fillColor" 
+                        value="#FFFFFF" oninput="onSetFillColor(this)"/>
+                    </button>
+                 </div>
                  <div class="save-container">
                     <button class="btn btn-download">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                        <a href="#" onclick="onDownloadCanvas(this)" 
-                        download="file-name">Download</a>
+                        <a href="#" onclick="onDownloadCanvas(this)" download="file-name">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Download
+                        </a>
                     </button>
                  </div>
             </section>

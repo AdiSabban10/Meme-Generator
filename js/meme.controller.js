@@ -8,20 +8,23 @@ function renderMeme() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
     
-    const gMeme = getMeme()
+    const meme = getMeme()
+    const imgs = getImgs()
     
     const elImg = new Image()
-    elImg.src = gImgs[gMeme.selectedImgId].url
+    elImg.src = imgs[meme.selectedImgId].url
     
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
         
-        const txt = gMeme.lines[0].txt
-        const textSize = gMeme.lines[0].size
+        const txt = meme.lines[0].txt
+        const textSize = meme.lines[0].size
         gCtx.font = 'bold ' + textSize + 'px Arial'
-        gCtx.fillStyle = gMeme.lines[0].color
+        gCtx.strokeStyle = meme.lines[0].outlineColor
+        gCtx.fillStyle = meme.lines[0].fillColor
         gCtx.textAlign = 'center'
         gCtx.fillText(txt, gElCanvas.width / 2, 40)
+        gCtx.strokeText(txt, gElCanvas.width / 2, 40)
     }
 }
 
@@ -38,6 +41,18 @@ function onDownloadCanvas(elLink) {
 
 	elLink.href = dataUrl
 	elLink.download = 'my-img'
+}
+
+function onSetOutlineColor(elColor){
+    const color = elColor.value
+    setOutlineColor(color)
+    renderMeme()
+}
+
+function onSetFillColor(elColor){
+    const color = elColor.value
+    setFillColor(color)
+    renderMeme()
 }
 
 

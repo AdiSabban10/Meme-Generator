@@ -17,5 +17,7 @@ var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['crazy', 'sarcastic'] },
              { id: 17, url: 'img/17.jpg', keywords: ['happy', 'sad'] }
             ]
 
-
+function getImgs() {
+    return gImgs
+}
 

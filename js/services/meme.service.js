@@ -7,7 +7,8 @@ var gMeme = {
                 {
                     txt: 'example',
                     size: 20,
-                    color: 'red'
+                    outlineColor: 'black',
+                    fillColor: 'white',
                 }
             ]
         }
@@ -26,4 +27,12 @@ function setImg(imgId) {
 function setLineTxt(txt) {
     gMeme.lines[0].txt = txt
 
+}
+
+function setOutlineColor(color) {
+    gMeme.lines[0].outlineColor = color
+}
+
+function setFillColor(color) {
+    gMeme.lines[0].fillColor = color
 }
