@@ -23,12 +23,19 @@
                 <input type="text" class="txt" placeholder="Add text here"
                  oninput="onAddTxt(this)">
                  <div class="editor-font">
+                    <button class="btn-font" onclick="onUpdateLineSize(1)">
+                        <i class="fa-solid fa-font"> + </i>
+                    </button>
+                    <button class="btn-font" onclick="onUpdateLineSize(-1)">
+                        <i class="fa-solid fa-font"> - </i>
+                    </button>
                     <button class="btn-font color-picker">
                         <i class="fa-solid fa-brush"></i>
                         <input type="color" class="btn-font-color" name="fontColor" 
                         value="#000000" oninput="onSetOutlineColor(this)"/>
                     </button>
                     <button class="btn-font color-picker">
+                        <i class="fa-solid fa-fill-drip"></i>
                         <input type="color" class="btn-font-color" name="fillColor" 
                         value="#FFFFFF" oninput="onSetFillColor(this)"/>
                     </button>

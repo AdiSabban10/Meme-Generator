@@ -45,13 +45,24 @@ function onDownloadCanvas(elLink) {
 
 function onSetOutlineColor(elColor){
     const color = elColor.value
+
+    document.querySelector('.fa-brush').style.color = color
+    
     setOutlineColor(color)
     renderMeme()
 }
 
 function onSetFillColor(elColor){
     const color = elColor.value
+    
+    document.querySelector('.fa-fill-drip').style.color = color
+    
     setFillColor(color)
+    renderMeme()
+}
+
+function onUpdateLineSize(dir) {
+    updateLineSize(dir)
     renderMeme()
 }
 
