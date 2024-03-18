@@ -1,17 +1,27 @@
 'use strict'
 
 var gMeme = {
-            selectedImgId: 4,
-            selectedLineIdx: 0,
-            lines: [
-                {
-                    txt: 'example',
-                    size: 50,
-                    outlineColor: 'black',
-                    fillColor: 'white',
-                }
-            ]
-        }
+        selectedImgId: 4,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'example',
+                size: 50,
+                outlineColor: 'black',
+                fillColor: 'white',
+            }, {
+                txt: 'adi',
+                size: 40,
+                outlineColor: 'black',
+                fillColor: 'white',
+            },{
+                txt: 'sabban',
+                size: 50,
+                outlineColor: 'black',
+                fillColor: 'white',
+            }
+        ]
+    }
 
 
 function getMeme() {
@@ -25,23 +35,49 @@ function setImg(imgId) {
 }
 
 function setLineTxt(txt) {
-    gMeme.lines[0].txt = txt
+    const idx = gMeme.selectedLineIdx
+    gMeme.lines[idx].txt = txt
     
 }
 
 function setOutlineColor(color) {
-    gMeme.lines[0].outlineColor = color
+    const idx = gMeme.selectedLineIdx
+    gMeme.lines[idx].outlineColor = color
 }
 
 function setFillColor(color) {
-    gMeme.lines[0].fillColor = color
+    const idx = gMeme.selectedLineIdx
+    gMeme.lines[idx].fillColor = color
 }
 
 function updateLineSize(dir) {
-    if (dir === -1 && gMeme.lines[0].size <= 20 ||
-        dir === 1 && gMeme.lines[0].size >= 100){
+    const idx = gMeme.selectedLineIdx
+    if (dir === -1 && gMeme.lines[idx].size <= 20 ||
+        dir === 1 && gMeme.lines[idx].size >= 100){
         return
     }
     
-    gMeme.lines[0].size += (10 * dir)
+    gMeme.lines[idx].size += (10 * dir)
+}
+
+function addLine() {
+    const newLine = {
+        txt: 'New Line',
+        size: 30,
+        outlineColor: 'black',
+        fillColor: 'white',
+    }
+
+    gMeme.lines.push(newLine)
+}
+
+function switchLine() {
+    const totalLines = gMeme.lines.length
+    if (totalLines === 0) return
+
+    gMeme.selectedLineIdx++;
+
+    if (gMeme.selectedLineIdx >= totalLines) {
+        gMeme.selectedLineIdx = 0;
+    }
 }

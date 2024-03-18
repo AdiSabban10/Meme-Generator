@@ -3,11 +3,22 @@
 let gElCanvas
 let gCtx
 
-
-function renderMeme() {
+function  renderEditor() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    
+
+    resizeCanvas()
+    renderMeme()
+}
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container')
+
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
+}
+
+function renderMeme() {
     const meme = getMeme()
     const imgs = getImgs()
     
@@ -17,14 +28,32 @@ function renderMeme() {
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
         
-        const txt = meme.lines[0].txt
-        const textSize = meme.lines[0].size
-        gCtx.font = 'bold ' + textSize + 'px Arial'
-        gCtx.strokeStyle = meme.lines[0].outlineColor
-        gCtx.fillStyle = meme.lines[0].fillColor
-        gCtx.textAlign = 'center'
-        gCtx.fillText(txt, gElCanvas.width / 2, 40)
-        gCtx.strokeText(txt, gElCanvas.width / 2, 40)
+        meme.lines.forEach((line, index) => {
+            const txt = line.txt
+            const textSize = line.size
+            gCtx.font = 'bold ' + textSize + 'px Arial'
+            gCtx.strokeStyle = line.outlineColor
+            gCtx.fillStyle = line.fillColor
+            gCtx.textAlign = 'center'
+            
+            const yPos = (index + 1) * (gElCanvas.height / (meme.lines.length + 1))
+            
+            gCtx.fillText(txt, gElCanvas.width / 2, yPos)
+            gCtx.strokeText(txt, gElCanvas.width / 2, yPos)
+            
+            if (index === meme.selectedLineIdx) {
+                gCtx.strokeStyle = 'black'
+                var textWidth = gCtx.measureText(line.txt).width
+                var textHeight = textSize
+
+                var frameX = (gElCanvas.width - textWidth) / 2 - 10
+                var frameY =  yPos - textHeight + 5
+                var frameWidth = textWidth + 20
+                var frameHeight = textHeight + 10
+    
+                gCtx.strokeRect(frameX, frameY, frameWidth, frameHeight)
+            }
+        })
     }
 }
 
@@ -65,6 +94,17 @@ function onUpdateLineSize(dir) {
     updateLineSize(dir)
     renderMeme()
 }
+
+function onAddLine() {
+    addLine()
+    renderMeme()
+}
+
+function onSwitchLine() {
+    switchLine()
+    renderMeme()   
+}
+
 
 
 

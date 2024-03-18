@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/49cdaa1449.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="css/styles.css" /><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
 </head>
 <body onload="onInit()">
@@ -18,11 +19,17 @@
     </section>
     <section class="editor-page hidden">
         <main class="main-editor">
-            <canvas width="450" height="450"></canvas>
+            <div class="canvas-container">
+                <canvas width="400" height="400"></canvas>
+            </div>
             <section class="editor-tools">
                 <input type="text" class="txt" placeholder="Add text here"
                  oninput="onAddTxt(this)">
-                 <div class="editor-font">
+                <div class="editor-line">
+                    <button class="btn-line add-line" onclick="onAddLine()"> + </button>
+                    <button class="btn-line switch-line" onclick="onSwitchLine()">Switch Line</button>
+                </div>
+                <div class="editor-font">
                     <button class="btn-font" onclick="onUpdateLineSize(1)">
                         <i class="fa-solid fa-font"> + </i>
                     </button>
@@ -39,15 +46,15 @@
                         <input type="color" class="btn-font-color" name="fillColor" 
                         value="#FFFFFF" oninput="onSetFillColor(this)"/>
                     </button>
-                 </div>
-                 <div class="save-container">
+                </div>
+                <div class="save-container">
                     <button class="btn btn-download">
                         <a href="#" onclick="onDownloadCanvas(this)" download="file-name">
                             <i class="fa-solid fa-floppy-disk"></i>
                             Download
                         </a>
                     </button>
-                 </div>
+                </div>
             </section>
 
         </main>
