@@ -73,9 +73,24 @@ function switchLine() {
     const totalLines = gMeme.lines.length
     if (totalLines === 0) return
 
-    gMeme.selectedLineIdx++;
+    gMeme.selectedLineIdx++
 
     if (gMeme.selectedLineIdx >= totalLines) {
-        gMeme.selectedLineIdx = 0;
+        gMeme.selectedLineIdx = 0
     }
+}
+
+function keepLocation(line, pos, textWidth, textHeight) {
+    const align = line.align || 'center'
+    
+    let adjustedXPos = pos.x
+    if (align === 'right') {
+        adjustedXPos -= textWidth
+    } else if (align === 'left') {
+        adjustedXPos += textWidth
+    }
+    line.pos = pos
+    line.pos.x = adjustedXPos
+    line.textWidth = textWidth
+    line.textHeight = textHeight
 }
