@@ -30,8 +30,6 @@ function getMeme() {
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId - 1
-    // console.log('gMeme:', gMeme)
-    
 }
 
 function setLineTxt(txt) {
