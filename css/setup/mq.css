@@ -1,0 +1,117 @@
+/* MOBILE ONLY */
+@media (max-width: 920px) {
+   
+    .toggle-menu-btn {
+        display: block; 
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 60px; 
+        right: 0;
+        width: 200px;
+        background-color: #f9f9f9;
+        border-left: 1px solid #ddd;
+        z-index: 1000;
+        box-shadow: -6px 0px 20px rgb(0 0 0 / 25%);
+        /* transform: translateX(0); */
+    }
+
+    body.menu-open .main-nav,
+    body.menu-open .main-screen {
+        display: block; 
+    }
+    
+    .main-nav .main-nav-list {
+        flex-direction: column;
+    }
+
+    .main-nav .main-nav-list > li {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .main-nav .main-nav-list a {
+        display: flex;
+        justify-content: center;
+        padding: 8px 10px;
+    }
+
+    .main-nav .main-nav-list a:hover {
+        background-color: #f0f0f0;
+    }
+
+    .main-screen {
+        display: none; 
+    }
+
+}
+
+
+
+
+/* SMALL */
+@media (min-width: 640px) {
+    .gallery-container img {
+        width: 400px;
+    }
+}
+
+/* MEDIUM */
+@media (min-width: 920px) {
+    .toggle-menu-btn {
+        display: none; 
+    }
+
+    .main-nav {
+        display: block; 
+    }
+
+    .main-nav .main-nav-list a{
+        padding: 20px;
+    }
+
+    .gallery-container img {
+        width: 250px;
+    }
+
+    .main-editor {
+        grid-template-columns:  
+            minmax(10px, 1fr) 
+            minmax(auto, 445px) 
+            minmax(10px, 1fr) 
+            minmax(auto, 445px) 
+            minmax(10px, 1fr);  
+        
+    }
+    .canvas-container {
+        grid-column: 2;
+        width: 100%;
+        padding-top: 100%; 
+    }
+
+    .editor-tools {
+        grid-column: 4;
+        margin-top: 0;
+    }
+
+    
+}
+
+/* LARGE */
+@media (min-width: 1100px) {
+    .main-editor {
+        grid-template-columns:  
+            minmax(10px, 1fr) 
+            minmax(auto, 530px) 
+            minmax(20px, 1fr) 
+            minmax(auto, 530px) 
+            minmax(10px, 1fr);  
+        
+    }
+}

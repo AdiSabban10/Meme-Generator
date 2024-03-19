@@ -1,5 +1,9 @@
 'use strict'
 
+function showGallery() {
+    onInit()
+    hideNav()
+}
 
 function renderGallery() {
    var strHtmls = gImgs.map(img => `

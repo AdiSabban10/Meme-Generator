@@ -8,3 +8,23 @@
     background-color: rgb(94, 201, 201);
     border-radius: 3em;
 }
+
+.main-header .main-nav-list {
+    display: flex;
+    margin: 0 50px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1.3em;
+}
+
+.main-header .main-nav-list a {
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 13px;
+
+}
+

@@ -7,3 +7,12 @@ function onInit() {
 
 }
 
+function toggleMenu() {
+    document.body.classList.toggle('menu-open')
+}
+
+function hideNav() {
+    document.body.classList.remove('menu-open')
+}
+
+

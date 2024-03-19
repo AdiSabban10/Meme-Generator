@@ -9,9 +9,16 @@
     <title>Meme Generator</title>
 </head>
 <body onload="onInit()">
+    <div class="main-screen" onclick="toggleMenu()"></div>
     <header class="main-header">
         <div class="logo">Meme Generator</div>
-        <button class="btn-gallery" onclick="onInit()">Gallery</button>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <li ><a class="nav-gallery" href="#" onclick="showGallery()">Gallery</a></li>
+                <li><a href="#" onclick="showEditor()">Editor</a></li>
+            </ul>
+        </nav>
+        <button class="toggle-menu-btn" onclick="toggleMenu()">☰</button>
     </header>
     
     <section class="gallery-page">

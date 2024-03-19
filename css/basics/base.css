@@ -4,15 +4,10 @@
 
 html {
     background-color: rgb(31, 30, 30);
+    font-family: Poppins, sans-serif;
+    
 }
 
-/* body {
-    margin: 0;
-} */
-
-/* section {
-    display: block;
-} */
 
 .hidden {
     display: none;
