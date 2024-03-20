@@ -33,8 +33,16 @@
                 <input type="text" class="txt" placeholder="Add text here"
                  oninput="onAddTxt(this)">
                 <div class="editor-line">
-                    <button class="btn-line add-line" onclick="onAddLine()"> + </button>
-                    <button class="btn-line switch-line" onclick="onSwitchLine()">Switch Line</button>
+                    <button class="btn-line switch-line" onclick="onSwitchLine()">
+                        <i class="fa-solid fa-arrow-up-long"></i>
+                        <i class="fa-solid fa-arrow-down-long"></i>
+                    </button>
+                    <button class="btn-line add-line" onclick="onAddLine()">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="btn-line delete-line" onclick="onDeleteLine()">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 </div>
                 <div class="editor-font">
                     <button class="btn-font" onclick="onUpdateLineSize(1)">
@@ -43,9 +51,32 @@
                     <button class="btn-font" onclick="onUpdateLineSize(-1)">
                         <i class="fa-solid fa-font"> - </i>
                     </button>
+                    <!-- <button class="btn-font" onclick="onSetAlignment('left')"> -->
+                    <button class="btn-font">
+                        <i class="fa-solid fa-align-left"></i>
+                    </button>
+                    <!-- <button class="btn-font" onclick="onSetAlignment('center')"> -->
+                    <button class="btn-font">
+                        <i class="fa-solid fa-align-center"></i>
+                    </button>
+                    <!-- <button class="btn-font" onclick="onSetAlignment('right')"> -->
+                    <button class="btn-font">
+                        <i class="fa-solid fa-align-right"></i>
+                    </button>
+                    <select value="Arial" class="btn-font font-family" onchange="onSetFontFamily(this)">
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                        <option value="Brush Script MT">Brush Script MT</option>
+                        <option value="Lucida Handwriting">Lucida Handwriting</option>
+                    </select> 
                     <button class="btn-font color-picker">
                         <i class="fa-solid fa-brush"></i>
-                        <input type="color" class="btn-font-color" name="fontColor" 
+                        <input type="color" class="btn-font-color" name="outlineColor" 
                         value="#000000" oninput="onSetOutlineColor(this)"/>
                     </button>
                     <button class="btn-font color-picker">

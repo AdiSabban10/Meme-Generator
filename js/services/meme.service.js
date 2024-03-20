@@ -5,20 +5,20 @@ var gMeme = {
         selectedLineIdx: 0,
         lines: [
             {
-                txt: 'example',
-                size: 50,
-                outlineColor: 'black',
-                fillColor: 'white',
+                txt: 'Add text here',
+                size: 40,
+                outlineColor: '#000000',
+                fillColor: '#FFFFFF',
             }, {
                 txt: 'adi',
                 size: 40,
-                outlineColor: 'black',
-                fillColor: 'white',
+                outlineColor: '#000000',
+                fillColor: '#FFFFFF',
             },{
                 txt: 'sabban',
                 size: 50,
-                outlineColor: 'black',
-                fillColor: 'white',
+                outlineColor: '#000000',
+                fillColor: '#FFFFFF',
             }
         ]
     }
@@ -33,11 +33,29 @@ function setImg(imgId) {
 }
 
 function setLineTxt(txt) {
+    if(gMeme.lines.length === 0) return
     const idx = gMeme.selectedLineIdx
     gMeme.lines[idx].txt = txt
     
 }
 
+function setAlignment(align) {
+    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
+    let newXPos
+    
+    if (align === 'left') {
+        newXPos = selectedLine.textWidth / 2
+    } else if (align === 'right') {
+        newXPos = gElCanvas.width - selectedLine.textWidth / 2
+    } else {
+        newXPos = gElCanvas.width / 2
+    }
+    
+    selectedLine.align = align
+    selectedLine.pos.x = newXPos
+
+}
+    
 function setOutlineColor(color) {
     const idx = gMeme.selectedLineIdx
     gMeme.lines[idx].outlineColor = color
@@ -60,10 +78,10 @@ function updateLineSize(dir) {
 
 function addLine() {
     const newLine = {
-        txt: 'New Line',
+        txt: 'Add text here',
         size: 30,
-        outlineColor: 'black',
-        fillColor: 'white',
+        // outlineColor: '#000000',
+        // fillColor: '#FFFFFF',
     }
 
     gMeme.lines.push(newLine)
@@ -80,6 +98,22 @@ function switchLine() {
     }
 }
 
+function deleteLine() {
+    if (gMeme.lines.length === 0) return
+    
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    
+    if (gMeme.selectedLineIdx >= gMeme.lines.length) {
+        gMeme.selectedLineIdx = gMeme.lines.length - 1;
+    }
+
+}
+
+function setFontFamily(font) {
+    const idx = gMeme.selectedLineIdx
+    gMeme.lines[idx].fontFamily = font
+}
+
 function keepLocation(line, pos, textWidth, textHeight) {
     const align = line.align || 'center'
     
@@ -93,4 +127,6 @@ function keepLocation(line, pos, textWidth, textHeight) {
     line.pos.x = adjustedXPos
     line.textWidth = textWidth
     line.textHeight = textHeight
+
 }
+

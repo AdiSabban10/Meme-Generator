@@ -44,10 +44,14 @@ function selectLine(event) {
     const meme = getMeme()
 
     meme.lines.forEach((line, index) => {
-        const frameX = line.pos.x - line.textWidth / 2 - 10
-        const frameY = line.pos.y - line.textHeight + 5
-        const frameWidth = line.textWidth + 20
-        const frameHeight = line.textHeight + 10
+        const frameX = line.pos.x - line.textWidth / 2 
+        const frameY = line.pos.y - line.textHeight
+        const frameWidth = line.textWidth
+        const frameHeight = line.textHeight
+        // const frameX = line.pos.x - line.textWidth / 2 - 10
+        // const frameY = line.pos.y - line.textHeight + 5
+        // const frameWidth = line.textWidth + 20
+        // const frameHeight = line.textHeight + 10
 
         if (mouseX >= frameX &&
             mouseX <= frameX + frameWidth &&
@@ -57,6 +61,7 @@ function selectLine(event) {
             renderMeme()
         }
     })
+    
 }
 
 function calculateYPosition(index, totalLines) {
@@ -72,34 +77,58 @@ function drawText(line, yPos) {
     const textSize = line.size
     const xPos = line.xPos || gElCanvas.width / 2
     const align = line.align || 'center'
-
-    gCtx.font = 'bold ' + textSize + 'px Arial'
-    gCtx.strokeStyle = line.outlineColor
-    gCtx.fillStyle = line.fillColor
+    const fontFamily = line.fontFamily || 'Arial'
+    
+    gCtx.font = 'bold ' + textSize + 'px ' + fontFamily
+    gCtx.strokeStyle = line.outlineColor || '#000000'
+    gCtx.fillStyle = line.fillColor || '#FFFFFF'
     gCtx.textAlign = align
-
+    
     const textWidth = gCtx.measureText(txt).width
     const textHeight = textSize
-
+    
     const adjustedPos = { x: xPos, y: yPos }
     keepLocation(line, adjustedPos, textWidth, textHeight)
-
+    
     gCtx.fillText(txt, adjustedPos.x, adjustedPos.y)
     gCtx.strokeText(txt, adjustedPos.x, adjustedPos.y)
 }
+
 
 function drawSelectedFrame(line, yPos) {
     gCtx.strokeStyle = 'black'
     var textWidth = gCtx.measureText(line.txt).width
     var textHeight = line.size
     var xPos = line.xPos || gElCanvas.width / 2
-
+    
     var frameX = xPos - textWidth / 2 - 10
     var frameY = yPos - textHeight + 5
     var frameWidth = textWidth + 20
     var frameHeight = textHeight + 10
-
+    
     gCtx.strokeRect(frameX, frameY, frameWidth, frameHeight)
+
+    updateEditorStyle(line)
+    
+}
+
+function updateEditorStyle(line) {
+    const txtInput = document.querySelector('.txt')
+    txtInput.value = line.txt
+    
+    const elOutlineColorInput = document.querySelector('[name="outlineColor"]')
+    const elOutlineColor = document.querySelector('.fa-brush')
+    elOutlineColorInput.value = line.outlineColor
+    elOutlineColor.style.color = elOutlineColorInput.value
+    
+    const elFillColorInput = document.querySelector('[name="fillColor"]')
+    const elFillColor = document.querySelector('.fa-fill-drip')
+    elFillColorInput.value = line.fillColor
+    elFillColor.style.color = elFillColorInput.value
+    
+    const elFontFamilyInput = document.querySelector('.font-family');
+    elFontFamilyInput.value = line.fontFamily
+
 }
 
 function onAddTxt(elTxt) {
@@ -139,6 +168,11 @@ function onUpdateLineSize(dir) {
     renderMeme()
 }
 
+function onSetAlignment(align) {
+    setAlignment(align)
+    renderMeme()
+}
+
 function onAddLine() {
     addLine()
     renderMeme()
@@ -146,6 +180,16 @@ function onAddLine() {
 
 function onSwitchLine() {
     switchLine()
+    renderMeme()
+}
+
+function onDeleteLine() {
+    deleteLine()
+    renderMeme()
+}
+
+function onSetFontFamily(elSelectedFont) {
+    setFontFamily(elSelectedFont.value)
     renderMeme()
 }
 
