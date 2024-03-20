@@ -94,7 +94,6 @@ function drawText(line, yPos) {
     gCtx.strokeText(txt, adjustedPos.x, adjustedPos.y)
 }
 
-
 function drawSelectedFrame(line, yPos) {
     gCtx.strokeStyle = 'black'
     var textWidth = gCtx.measureText(line.txt).width
