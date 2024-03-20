@@ -2,6 +2,9 @@
 
 let gElCanvas
 let gCtx
+let gStartPos
+
+const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
 function renderEditor() {
     gElCanvas = document.querySelector('canvas')
@@ -36,29 +39,34 @@ function renderMeme() {
         })
     }
     gElCanvas.addEventListener('click', selectLine)
+
+    if (meme.lines.length === 0) resetEditorStyle()
 }
 
-function selectLine(event) {
-    const mouseX = event.offsetX
-    const mouseY = event.offsetY
+function selectLine(ev) {
+    const meme = getMeme()
+    gStartPos = getEvPos(ev)
+    
+    meme.lines.forEach((line, index) => {
+        
+        if (gStartPos.x >= line.pos.x - (line.textWidth / 2) && 
+            gStartPos.x <= line.pos.x + (line.textWidth / 2) && 
+            gStartPos.y >= line.pos.y - (line.textHeight / 2) && 
+            gStartPos.y <= line.pos.y + (line.textHeight / 2) ) {
+                meme.selectedLineIdx = index
+                renderMeme()
+        }
+    })
+    
+}
+
+function cleanSelectedFrame() {
     const meme = getMeme()
 
     meme.lines.forEach((line, index) => {
-        const frameX = line.pos.x - line.textWidth / 2 
-        const frameY = line.pos.y - line.textHeight
-        const frameWidth = line.textWidth
-        const frameHeight = line.textHeight
-        // const frameX = line.pos.x - line.textWidth / 2 - 10
-        // const frameY = line.pos.y - line.textHeight + 5
-        // const frameWidth = line.textWidth + 20
-        // const frameHeight = line.textHeight + 10
-
-        if (mouseX >= frameX &&
-            mouseX <= frameX + frameWidth &&
-            mouseY >= frameY &&
-            mouseY <= frameY + frameHeight) {
-            meme.selectedLineIdx = index
-            renderMeme()
+        const yPos = calculateYPosition(index, meme.lines.length)
+        if (index === meme.selectedLineIdx) {
+            drawSelectedFrame(line, yPos)
         }
     })
     
@@ -75,14 +83,13 @@ function drawImage(elImg) {
 function drawText(line, yPos) {
     const txt = line.txt
     const textSize = line.size
-    const xPos = line.xPos || gElCanvas.width / 2
-    const align = line.align || 'center'
+    const xPos = (!line.pos) ? (gElCanvas.width / 2) : line.pos.x
     const fontFamily = line.fontFamily || 'Arial'
     
     gCtx.font = 'bold ' + textSize + 'px ' + fontFamily
     gCtx.strokeStyle = line.outlineColor || '#000000'
     gCtx.fillStyle = line.fillColor || '#FFFFFF'
-    gCtx.textAlign = align
+    gCtx.textAlign = 'center'
     
     const textWidth = gCtx.measureText(txt).width
     const textHeight = textSize
@@ -98,15 +105,15 @@ function drawSelectedFrame(line, yPos) {
     gCtx.strokeStyle = 'black'
     var textWidth = gCtx.measureText(line.txt).width
     var textHeight = line.size
-    var xPos = line.xPos || gElCanvas.width / 2
+    var xPos = line.pos.x
     
-    var frameX = xPos - textWidth / 2 - 10
+    var frameX = xPos - textWidth / 2 - 5
     var frameY = yPos - textHeight + 5
-    var frameWidth = textWidth + 20
+    var frameWidth = textWidth + 10
     var frameHeight = textHeight + 10
     
     gCtx.strokeRect(frameX, frameY, frameWidth, frameHeight)
-
+    
     updateEditorStyle(line)
     
 }
@@ -128,6 +135,15 @@ function updateEditorStyle(line) {
     const elFontFamilyInput = document.querySelector('.font-family');
     elFontFamilyInput.value = line.fontFamily
 
+}
+
+function resetEditorStyle() {
+    document.querySelector('.txt').value = ''
+    document.querySelector('.fa-brush').style.color = '#000000'
+    document.querySelector('.fa-fill-drip').style.color = '#FFFFFF'
+
+    document.querySelector('.font-family').value = 'Ariel'
+    
 }
 
 function onAddTxt(elTxt) {
@@ -168,7 +184,19 @@ function onUpdateLineSize(dir) {
 }
 
 function onSetAlignment(align) {
-    setAlignment(align)
+    const meme = getMeme()
+    const selectedLine = meme.lines[meme.selectedLineIdx]
+    let newXPos
+    
+    if (align === 'left') {
+        newXPos = selectedLine.textWidth / 2 + 10
+    } else if (align === 'right') {
+        newXPos = gElCanvas.width - selectedLine.textWidth / 2 - 10
+    } else {
+        newXPos = gElCanvas.width / 2
+    }
+
+    selectedLine.pos.x = newXPos
     renderMeme()
 }
 
@@ -191,6 +219,27 @@ function onSetFontFamily(elSelectedFont) {
     setFontFamily(elSelectedFont.value)
     renderMeme()
 }
+
+function getEvPos(ev) {
+
+    if (TOUCH_EVENTS.includes(ev.type)) {
+
+        ev.preventDefault()         // Prevent triggering the mouse events
+        ev = ev.changedTouches[0]   // Gets the first touch point
+
+        return {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+        }
+
+    } else {
+        return {
+            x: ev.offsetX,
+            y: ev.offsetY,
+        }
+    }
+}
+
 
 
 

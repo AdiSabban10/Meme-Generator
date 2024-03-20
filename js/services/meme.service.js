@@ -8,17 +8,17 @@ var gMeme = {
                 txt: 'Add text here',
                 size: 40,
                 outlineColor: '#000000',
-                fillColor: '#FFFFFF',
+                fillColor: '#ffffff',
             }, {
                 txt: 'adi',
                 size: 40,
                 outlineColor: '#000000',
-                fillColor: '#FFFFFF',
+                fillColor: '#ffffff',
             },{
                 txt: 'sabban',
                 size: 50,
                 outlineColor: '#000000',
-                fillColor: '#FFFFFF',
+                fillColor: '#ffffff',
             }
         ]
     }
@@ -37,23 +37,6 @@ function setLineTxt(txt) {
     const idx = gMeme.selectedLineIdx
     gMeme.lines[idx].txt = txt
     
-}
-
-function setAlignment(align) {
-    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
-    let newXPos
-    
-    if (align === 'left') {
-        newXPos = selectedLine.textWidth / 2
-    } else if (align === 'right') {
-        newXPos = gElCanvas.width - selectedLine.textWidth / 2
-    } else {
-        newXPos = gElCanvas.width / 2
-    }
-    
-    selectedLine.align = align
-    selectedLine.pos.x = newXPos
-
 }
     
 function setOutlineColor(color) {
@@ -115,19 +98,9 @@ function setFontFamily(font) {
 }
 
 function keepLocation(line, pos, textWidth, textHeight) {
-    const align = line.align || 'center'
-    
-    let adjustedXPos = pos.x
-    if (align === 'right') {
-        adjustedXPos -= textWidth
-    } else if (align === 'left') {
-        adjustedXPos += textWidth
-    }
     line.pos = pos
-    line.pos.x = adjustedXPos
     line.textWidth = textWidth
     line.textHeight = textHeight
-
 }
 
 
