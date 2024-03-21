@@ -21,23 +21,25 @@ function resizeCanvas() {
     gElCanvas.height = elContainer.offsetHeight
 }
 
-function renderMeme() {
+function renderMeme(isDownload=false) {
     const meme = getMeme()
     const imgs = getImgs()
 
     const elImg = new Image()
     elImg.src = imgs[meme.selectedImgId].url
 
-    elImg.onload = () => {
+    // elImg.onload = () => {
         drawImage(elImg)
         meme.lines.forEach((line, index) => {
             const yPos = calculateYPosition(index, meme.lines.length)
             drawText(line, yPos)
             if (index === meme.selectedLineIdx) {
-                drawSelectedFrame(line, yPos)
+                if (!isDownload) {
+                    drawSelectedFrame(line, yPos)
+                }
             }
         })
-    }
+    // }
     gElCanvas.addEventListener('click', selectLine)
 
     if (meme.lines.length === 0) resetEditorStyle()
@@ -124,14 +126,19 @@ function updateEditorStyle(line) {
     
     const elOutlineColorInput = document.querySelector('[name="outlineColor"]')
     const elOutlineColor = document.querySelector('.fa-brush')
+    
+    if (!line.outlineColor) line.outlineColor = '#000000'
     elOutlineColorInput.value = line.outlineColor
     elOutlineColor.style.color = elOutlineColorInput.value
     
     const elFillColorInput = document.querySelector('[name="fillColor"]')
     const elFillColor = document.querySelector('.fa-fill-drip')
+    
+    if (!line.fillColor) line.fillColor = '#ffffff'
     elFillColorInput.value = line.fillColor
     elFillColor.style.color = elFillColorInput.value
     
+    if (!line.fontFamily) line.fontFamily = 'Arial'
     const elFontFamilyInput = document.querySelector('.font-family');
     elFontFamilyInput.value = line.fontFamily
 
@@ -140,7 +147,7 @@ function updateEditorStyle(line) {
 function resetEditorStyle() {
     document.querySelector('.txt').value = ''
     document.querySelector('.fa-brush').style.color = '#000000'
-    document.querySelector('.fa-fill-drip').style.color = '#FFFFFF'
+    document.querySelector('.fa-fill-drip').style.color = '#ffffff'
 
     document.querySelector('.font-family').value = 'Ariel'
     
@@ -153,11 +160,13 @@ function onAddTxt(elTxt) {
 }
 
 function onDownloadCanvas(elLink) {
+    renderMeme(true)
     elLink.href = '#'       // Clear the link
     const dataUrl = gElCanvas.toDataURL()
 
     elLink.href = dataUrl
     elLink.download = 'my-img'
+    renderMeme()
 }
 
 function onSetOutlineColor(elColor) {

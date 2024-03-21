@@ -66,6 +66,7 @@ function addLine() {
         // outlineColor: '#000000',
         // fillColor: '#FFFFFF',
     }
+    if (gMeme.lines.length === 0) gMeme.selectedLineIdx = 0
 
     gMeme.lines.push(newLine)
 }
