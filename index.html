@@ -68,14 +68,15 @@
                     </button>
                     <select value="Arial" class="btn-font font-family" onchange="onSetFontFamily(this)">
                         <option value="Arial">Arial</option>
-                        <option value="Verdana">Verdana</option>
-                        <option value="Georgia">Georgia</option>
                         <option value="Times New Roman">Times New Roman</option>
                         <option value="Courier New">Courier New</option>
-                        <option value="Tahoma">Tahoma</option>
-                        <option value="Comic Sans MS">Comic Sans MS</option>
-                        <option value="Brush Script MT">Brush Script MT</option>
-                        <option value="Lucida Handwriting">Lucida Handwriting</option>
+                        <option value="Georgia">Georgia</option>
+                        <!-- Not supported on GitHub -->
+                        <!-- <option value="Verdana">Verdana</option> -->
+                        <!-- <option value="Tahoma">Tahoma</option> -->
+                        <!-- <option value="Comic Sans MS">Comic Sans MS</option> -->
+                        <!-- <option value="Brush Script MT">Brush Script MT</option> -->
+                        <!-- <option value="Lucida Handwriting">Lucida Handwriting</option> -->
                     </select> 
                     <button class="btn-font color-picker">
                         <i class="fa-solid fa-brush"></i>
@@ -93,6 +94,12 @@
                         <a href="#" onclick="onSaveMeme(this)">
                             <i class="fa-solid fa-floppy-disk"></i>
                             Save
+                        </a>
+                    </button>
+                    <button class="btn btn-share">
+                        <a href="#" onclick="onShareMeme()">
+                            <i class="fa-solid fa-share"></i>
+                            Share
                         </a>
                     </button>
                     <button class="btn btn-download">
