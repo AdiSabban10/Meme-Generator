@@ -9,21 +9,10 @@ var gMeme = {
                 size: 40,
                 outlineColor: '#000000',
                 fillColor: '#ffffff',
-            }, 
-            // {
-            //     txt: 'adi',
-            //     size: 40,
-            //     outlineColor: '#000000',
-            //     fillColor: '#ffffff',
-            // },{
-            //     txt: 'sabban',
-            //     size: 50,
-            //     outlineColor: '#000000',
-            //     fillColor: '#ffffff',
-            // }
+            }
         ]
-    }
-
+}
+var gMemes
 
 function getMeme() {
     return gMeme
@@ -80,8 +69,6 @@ function addLine() {
     const newLine = {
         txt: 'Add text here',
         size: 30,
-        // outlineColor: '#000000',
-        // fillColor: '#FFFFFF',
     }
     if (gMeme.lines.length === 0) gMeme.selectedLineIdx = 0
 
@@ -105,7 +92,7 @@ function deleteLine() {
     gMeme.lines.splice(gMeme.selectedLineIdx, 1)
     
     if (gMeme.selectedLineIdx >= gMeme.lines.length) {
-        gMeme.selectedLineIdx = gMeme.lines.length - 1;
+        gMeme.selectedLineIdx = gMeme.lines.length - 1
     }
 
 }
@@ -140,4 +127,9 @@ function selectLine(clickedPos) {
             }
         })
 }
+
+
+
+
+
 

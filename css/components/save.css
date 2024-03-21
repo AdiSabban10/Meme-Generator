@@ -1,0 +1,11 @@
+.saved-container {
+    display: flex;
+    flex-direction: column;
+    background-color:  rgb(32, 102, 102);
+    align-items: center;
+
+}
+
+.saved-container h2 {
+    font-size: 3em;
+}

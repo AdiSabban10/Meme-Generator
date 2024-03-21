@@ -15,7 +15,7 @@
         <nav class="main-nav">
             <ul class="main-nav-list">
                 <li ><a class="nav-gallery" href="#" onclick="showGallery()">Gallery</a></li>
-                <li><a href="#" onclick="showEditor()">Editor</a></li>
+                <li><a  class="nav-saved" href="#" onclick="showSaved()">Saved</a></li>
             </ul>
         </nav>
         <button class="toggle-menu-btn" onclick="toggleMenu()">☰</button>
@@ -23,6 +23,12 @@
     
     <section class="gallery-page">
         <section class="gallery-container"></section>
+    </section>
+    <section class="saved-page hidden">
+        <section class="saved-container">
+            <h2>soon...</h2>
+            <h2>working on it</h2>
+        </section>
     </section>
     <section class="editor-page hidden">
         <main class="main-editor">
@@ -83,9 +89,15 @@
                     </button>
                 </div>
                 <div class="save-container">
+                    <button class="btn btn-save">
+                        <a href="#" onclick="onSaveMeme(this)">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Save
+                        </a>
+                    </button>
                     <button class="btn btn-download">
                         <a href="#" onclick="onDownloadCanvas(this)" download="file-name">
-                            <i class="fa-solid fa-floppy-disk"></i>
+                            <i class="fa-solid fa-download"></i>
                             Download
                         </a>
                     </button>
@@ -95,6 +107,7 @@
         </main>
     </section>
    
+    <script src="js/services/storage.service.js"></script>
     <script src="js/main.js"></script>
     <script src="js/services/gallery.service.js"></script>
     <script src="js/services/meme.service.js"></script>

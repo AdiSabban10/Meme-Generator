@@ -21,6 +21,7 @@ function renderGallery() {
 
 function onImgSelect(imgId) {
     document.querySelector('.gallery-page').classList.add('hidden')
+    document.querySelector('.saved-page').classList.add('hidden')
     document.querySelector('.editor-page').classList.remove('hidden')
     
     setImg(imgId)

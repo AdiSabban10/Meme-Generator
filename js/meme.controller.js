@@ -282,6 +282,17 @@ function onUp() {
     gIsDragging = false
 }
 
+function showSaved() {
+    document.querySelector('.gallery-page').classList.add('hidden')
+    document.querySelector('.editor-page').classList.add('hidden')
+    document.querySelector('.saved-page').classList.remove('hidden')
+    hideNav()
+
+}
+
+function onSaveMeme(elSave) {
+    showSaved()
+}
 
 
 

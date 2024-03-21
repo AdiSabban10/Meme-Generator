@@ -3,6 +3,7 @@
 
 /* components */
 @import url(components/main-header.css);
+@import url(components/save.css);
 @import url(components/gallery.css);
 @import url(components/editor.css);
 @import url(components/screen.css);
