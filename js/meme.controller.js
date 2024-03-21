@@ -41,25 +41,16 @@ function renderMeme(isDownload=false) {
             }
         })
     // }
-    gElCanvas.addEventListener('click', selectLine)
+    gElCanvas.addEventListener('click', onSelectLine)
+    gElCanvas.addEventListener('touchstart', onSelectLine)
 
     if (meme.lines.length === 0) resetEditorStyle()
 }
 
-function selectLine(ev) {
-    const meme = getMeme()
+function onSelectLine(ev) {
     gStartPos = getEvPos(ev)
-    
-    meme.lines.forEach((line, index) => {
-        
-        if (gStartPos.x >= line.pos.x - (line.textWidth / 2) && 
-            gStartPos.x <= line.pos.x + (line.textWidth / 2) && 
-            gStartPos.y >= line.pos.y - (line.textHeight / 2) && 
-            gStartPos.y <= line.pos.y + (line.textHeight / 2) ) {
-                meme.selectedLineIdx = index
-                renderMeme()
-        }
-    })
+    selectLine(gStartPos)
+    renderMeme()
     
 }
 
@@ -67,9 +58,8 @@ function cleanSelectedFrame() {
     const meme = getMeme()
 
     meme.lines.forEach((line, index) => {
-        const yPos = calculateYPosition(index, meme.lines.length)
         if (index === meme.selectedLineIdx) {
-            drawSelectedFrame(line, yPos)
+            drawSelectedFrame(line)
         }
     })
     
@@ -83,7 +73,7 @@ function drawText(line) {
     const txt = line.txt
     const textSize = line.size
     const xPos = (!line.pos) ? (gElCanvas.width / 2) : line.pos.x
-    var yPos = (!line.pos) ? (gElCanvas.height / 2) : line.pos.y
+    const yPos = (!line.pos) ? (gElCanvas.height / 2) : line.pos.y
     const fontFamily = line.fontFamily || 'Arial'
     
     gCtx.font = 'bold ' + textSize + 'px ' + fontFamily
@@ -231,13 +221,14 @@ function onSetFontFamily(elSelectedFont) {
 function getEvPos(ev) {
 
     if (TOUCH_EVENTS.includes(ev.type)) {
+        ev.preventDefault()         
 
-        ev.preventDefault()         // Prevent triggering the mouse events
-        ev = ev.changedTouches[0]   // Gets the first touch point
-
+        const touch = ev.changedTouches[0] 
+        const rect = ev.target.getBoundingClientRect() 
+        
         return {
-            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top
         }
 
     } else {

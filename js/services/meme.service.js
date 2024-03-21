@@ -130,4 +130,14 @@ function isTxtClicked(clickedPos) {
            clickedPos.y <= pos.y + (textHeight / 2))
 }
 
+function selectLine(clickedPos) {
+    gMeme.lines.forEach((line, index) => {
+        if (clickedPos.x >= line.pos.x - (line.textWidth / 2) && 
+            clickedPos.x <= line.pos.x + (line.textWidth / 2) && 
+            clickedPos.y >= line.pos.y - (line.textHeight / 2) && 
+            clickedPos.y <= line.pos.y + (line.textHeight / 2) ) {
+                gMeme.selectedLineIdx = index
+            }
+        })
+}
 
