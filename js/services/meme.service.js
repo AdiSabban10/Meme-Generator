@@ -9,23 +9,40 @@ var gMeme = {
                 size: 40,
                 outlineColor: '#000000',
                 fillColor: '#ffffff',
-            }, {
-                txt: 'adi',
-                size: 40,
-                outlineColor: '#000000',
-                fillColor: '#ffffff',
-            },{
-                txt: 'sabban',
-                size: 50,
-                outlineColor: '#000000',
-                fillColor: '#ffffff',
-            }
+            }, 
+            // {
+            //     txt: 'adi',
+            //     size: 40,
+            //     outlineColor: '#000000',
+            //     fillColor: '#ffffff',
+            // },{
+            //     txt: 'sabban',
+            //     size: 50,
+            //     outlineColor: '#000000',
+            //     fillColor: '#ffffff',
+            // }
         ]
     }
 
 
 function getMeme() {
     return gMeme
+}
+
+function resetMeme() {
+    gMeme = {
+        selectedImgId: 4,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'Add text here',
+                size: 40,
+                outlineColor: '#000000',
+                fillColor: '#ffffff',
+            }
+        ]
+    }
+ 
 }
 
 function setImg(imgId) {
@@ -102,6 +119,15 @@ function keepLocation(line, pos, textWidth, textHeight) {
     line.pos = pos
     line.textWidth = textWidth
     line.textHeight = textHeight
+}
+
+function isTxtClicked(clickedPos) {
+    const { pos, textWidth, textHeight } = gMeme.lines[gMeme.selectedLineIdx]
+    
+    return (clickedPos.x >= pos.x - (textWidth / 2) && 
+           clickedPos.x <= pos.x + (textWidth / 2) && 
+           clickedPos.y >= pos.y - (textHeight / 2) && 
+           clickedPos.y <= pos.y + (textHeight / 2))
 }
 
 

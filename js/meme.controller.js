@@ -3,6 +3,7 @@
 let gElCanvas
 let gCtx
 let gStartPos
+let gIsDragging = false
 
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
@@ -11,6 +12,7 @@ function renderEditor() {
     gCtx = gElCanvas.getContext('2d')
 
     resizeCanvas()
+    addListeners()
     renderMeme()
 }
 
@@ -31,11 +33,10 @@ function renderMeme(isDownload=false) {
     // elImg.onload = () => {
         drawImage(elImg)
         meme.lines.forEach((line, index) => {
-            const yPos = calculateYPosition(index, meme.lines.length)
-            drawText(line, yPos)
+            drawText(line)
             if (index === meme.selectedLineIdx) {
                 if (!isDownload) {
-                    drawSelectedFrame(line, yPos)
+                    drawSelectedFrame(line)
                 }
             }
         })
@@ -74,18 +75,15 @@ function cleanSelectedFrame() {
     
 }
 
-function calculateYPosition(index, totalLines) {
-    return (index + 1) * (gElCanvas.height / (totalLines + 1))
-}
-
 function drawImage(elImg) {
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 }
 
-function drawText(line, yPos) {
+function drawText(line) {
     const txt = line.txt
     const textSize = line.size
     const xPos = (!line.pos) ? (gElCanvas.width / 2) : line.pos.x
+    var yPos = (!line.pos) ? (gElCanvas.height / 2) : line.pos.y
     const fontFamily = line.fontFamily || 'Arial'
     
     gCtx.font = 'bold ' + textSize + 'px ' + fontFamily
@@ -103,11 +101,12 @@ function drawText(line, yPos) {
     gCtx.strokeText(txt, adjustedPos.x, adjustedPos.y)
 }
 
-function drawSelectedFrame(line, yPos) {
+function drawSelectedFrame(line) {
     gCtx.strokeStyle = 'black'
     var textWidth = gCtx.measureText(line.txt).width
     var textHeight = line.size
     var xPos = line.pos.x
+    var yPos = line.pos.y
     
     var frameX = xPos - textWidth / 2 - 5
     var frameY = yPos - textHeight + 5
@@ -248,6 +247,50 @@ function getEvPos(ev) {
         }
     }
 }
+
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+}
+
+function addMouseListeners() {
+    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+    gStartPos = getEvPos(ev)
+    
+    if (!isTxtClicked(gStartPos)) return
+    
+    gIsDragging = true
+}
+
+function onMove(ev) {
+    if (gIsDragging) {
+        const newPos = getEvPos(ev)
+        const meme = getMeme()
+        const selectedLine = meme.lines[meme.selectedLineIdx]
+
+        selectedLine.pos.x = newPos.x
+        selectedLine.pos.y = newPos.y
+        
+        gStartPos = newPos
+        renderMeme()
+    }
+}
+
+function onUp() {
+    gIsDragging = false
+}
+
 
 
 

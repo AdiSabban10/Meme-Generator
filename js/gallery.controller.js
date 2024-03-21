@@ -3,6 +3,7 @@
 function showGallery() {
     onInit()
     hideNav()
+    resetMeme()
 }
 
 function renderGallery() {
