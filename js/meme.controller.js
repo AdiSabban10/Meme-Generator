@@ -51,6 +51,8 @@ function onSelectLine(ev) {
     gStartPos = getEvPos(ev)
     selectLine(gStartPos)
     renderMeme()
+    const elTxt = document.querySelector('.txt');
+    elTxt.focus()
     
 }
 
@@ -293,7 +295,7 @@ function showSaved() {
     
 }
 
-function onSaveMeme(elSave) {
+function onSaveMeme() {
     saveMeme()
     const saveMsg = document.querySelector('.save-msg')
     saveMsg.classList.remove('hidden')
