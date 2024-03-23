@@ -152,7 +152,7 @@ function onAddTxt(elTxt) {
 
 function onDownloadCanvas(elLink) {
     renderMeme(true)
-    elLink.href = '#'       // Clear the link
+    elLink.href = '#'    
     const dataUrl = gElCanvas.toDataURL()
 
     elLink.href = dataUrl
