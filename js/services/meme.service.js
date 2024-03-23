@@ -128,6 +128,18 @@ function selectLine(clickedPos) {
         })
 }
 
+function saveMeme(){
+    const savedMemes = loadFromStorage('savedMemes') || []
+
+    savedMemes.push(gMeme)
+    saveToStorage('savedMemes', savedMemes)
+    console.log('savedMemes:', savedMemes)
+}
+
+function getMemes(){
+    gMemes = loadFromStorage('savedMemes') || []
+    return gMemes
+}
 
 
 

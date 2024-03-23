@@ -1,11 +1,21 @@
 .saved-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1em;
     background-color:  rgb(32, 102, 102);
     align-items: center;
+    gap: 1em;
+    border-radius: 1em;
 
 }
 
 .saved-container h2 {
     font-size: 3em;
+}
+
+.saved-meme-canvas {
+    background-color: white;
+    border-radius: 1em;
+    
 }

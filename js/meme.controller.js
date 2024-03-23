@@ -8,7 +8,7 @@ let gIsDragging = false
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
 function renderEditor() {
-    gElCanvas = document.querySelector('canvas')
+    gElCanvas = document.querySelector('.canvas-editor')
     gCtx = gElCanvas.getContext('2d')
 
     resizeCanvas()
@@ -33,7 +33,7 @@ function renderMeme(isDownloadOrShare=false) {
     // elImg.onload = () => {
         drawImage(elImg)
         meme.lines.forEach((line, index) => {
-            drawText(line)
+            drawText(line, gCtx)
             if (index === meme.selectedLineIdx) {
                 if (!isDownloadOrShare) {
                     drawSelectedFrame(line)
@@ -69,26 +69,26 @@ function drawImage(elImg) {
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 }
 
-function drawText(line) {
+function drawText(line, ctx) {
     const txt = line.txt
     const textSize = line.size
     const xPos = (!line.pos) ? (gElCanvas.width / 2) : line.pos.x
     const yPos = (!line.pos) ? (gElCanvas.height / 2) : line.pos.y
     const fontFamily = line.fontFamily || 'Arial'
     
-    gCtx.font = 'bold ' + textSize + 'px ' + fontFamily
-    gCtx.strokeStyle = line.outlineColor || '#000000'
-    gCtx.fillStyle = line.fillColor || '#FFFFFF'
-    gCtx.textAlign = 'center'
+    ctx.font = 'bold ' + textSize + 'px ' + fontFamily
+    ctx.strokeStyle = line.outlineColor || '#000000'
+    ctx.fillStyle = line.fillColor || '#FFFFFF'
+    ctx.textAlign = 'center'
     
-    const textWidth = gCtx.measureText(txt).width
+    const textWidth = ctx.measureText(txt).width
     const textHeight = textSize
     
     const adjustedPos = { x: xPos, y: yPos }
     keepLocation(line, adjustedPos, textWidth, textHeight)
     
-    gCtx.fillText(txt, adjustedPos.x, adjustedPos.y)
-    gCtx.strokeText(txt, adjustedPos.x, adjustedPos.y)
+    ctx.fillText(txt, adjustedPos.x, adjustedPos.y)
+    ctx.strokeText(txt, adjustedPos.x, adjustedPos.y)
 }
 
 function drawSelectedFrame(line) {
@@ -288,10 +288,51 @@ function showSaved() {
     document.querySelector('.saved-page').classList.remove('hidden')
     hideNav()
 
+    const savedMemes = getMemes()
+    renderSavedMemes(savedMemes)
+    
 }
 
 function onSaveMeme(elSave) {
-    showSaved()
+    saveMeme()
+    const saveMsg = document.querySelector('.save-msg')
+    saveMsg.classList.remove('hidden')
+    setTimeout(function() {
+        saveMsg.classList.add('hidden')
+    }, 3000)
+    console.log('saved meme' )
+}
+
+
+function renderSavedMemes(savedMemes) {
+    const savedContainer = document.querySelector('.saved-container')
+    
+    savedContainer.innerHTML = ''
+
+    const imgs = getImgs()
+
+    savedMemes.forEach(savedMeme => {
+        
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        canvas.classList.add('saved-meme-canvas')
+        canvas.width = gElCanvas?.width || 400
+        canvas.height = gElCanvas?.height || 400
+
+        const elImg = new Image()
+        elImg.src = imgs[savedMeme.selectedImgId].url
+        
+        //  elImg.onload = function() {
+            ctx.drawImage(elImg, 0, 0, canvas.width, canvas.height)
+        
+            savedMeme.lines.forEach(line => {
+                drawText(line, ctx)
+            })
+        //  }
+    
+        savedContainer.appendChild(canvas)
+    })
+
 }
 
 function onShareMeme() {
