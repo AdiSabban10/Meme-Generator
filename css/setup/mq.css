@@ -57,7 +57,8 @@
 
 /* SMALL */
 @media (min-width: 640px) {
-    .gallery-container img {
+    .gallery-container img,
+    .saved-container img {
         width: 400px;
     }
 }
@@ -76,7 +77,8 @@
         padding: 20px;
     }
 
-    .gallery-container img {
+    .gallery-container img,
+    .saved-container img {
         width: 250px;
     }
 

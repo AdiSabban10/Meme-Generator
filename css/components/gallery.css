@@ -6,6 +6,6 @@
 }
 
 .gallery-container img {
-    width: 400px;
     border-radius: 1em;
+	cursor: pointer;
 }

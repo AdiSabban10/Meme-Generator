@@ -1,10 +1,20 @@
 'use strict'
 
 function onInit() {
-    document.querySelector('.gallery-page').classList.remove('hidden')
-    document.querySelector('.editor-page').classList.add('hidden')
-    document.querySelector('.saved-page').classList.add('hidden')
+    togglePages('.gallery-page')
     renderGallery()
+}
+
+function togglePages(visiblePageClass) {
+    const allPages = ['.gallery-page', '.saved-page', '.editor-page']
+    allPages.forEach(page => {
+        const pageElement = document.querySelector(page)
+        if (page === visiblePageClass) {
+            pageElement.classList.remove('hidden')
+        } else {
+            pageElement.classList.add('hidden')
+        }
+    })
 }
 
 function toggleMenu() {

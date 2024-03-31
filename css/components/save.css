@@ -3,15 +3,57 @@
     justify-content: center;
     flex-wrap: wrap;
     padding: 1em;
-    background-color:  rgb(32, 102, 102);
-    align-items: center;
     gap: 1em;
-    border-radius: 1em;
-
 }
 
-.saved-meme-canvas {
-    background-color: white;
+.saved-meme {
+    position: relative;
+}
+
+.saved-container img {
     border-radius: 1em;
-    
+    cursor: pointer;
+}
+
+.delete-seved-meme {
+    position: absolute;
+    bottom: 5px; 
+    left: 5px; 
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    /* z-index: 1;  */
+}
+
+.delete-seved-meme i:hover {
+    color: rgb(128, 4, 4);
+}
+
+.saved-meme .modal {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(136, 221, 236, 0.8);
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-buttons {
+    text-align: center;
+}
+
+.modal-buttons button {
+    border: 1px solid;
+    border-radius: 1em;
+    background-color: rgba(136, 221, 236, 0.8);
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons button:hover {
+    background-color: rgba(6, 76, 88, 0.8);
+    font-weight: bold;
 }

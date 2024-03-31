@@ -12,33 +12,36 @@ var gMeme = {
             }
         ]
 }
-var gMemes
+var gSavedMemes
 
 function getMeme() {
     return gMeme
 }
 
-function resetMeme() {
-    gMeme = {
-        selectedImgId: 4,
-        selectedLineIdx: 0,
-        lines: [
-            {
-                txt: 'Add text here',
-                size: 40,
-                outlineColor: '#000000',
-                fillColor: '#ffffff',
-            }
-        ]
+function setMeme(meme = null) {
+    if (meme) {
+        gMeme = meme
+    } else {
+        gMeme = {
+            selectedImgId: 4,
+            selectedLineIdx: 0,
+            lines: [
+                {
+                    txt: 'Add text here',
+                    size: 40,
+                    outlineColor: '#000000',
+                    fillColor: '#ffffff',
+                }
+            ]
+        }
     }
- 
 }
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId - 1
 }
 
-function setLineTxt(txt) {
+function changeLineTxt(txt) {
     if(gMeme.lines.length === 0) return
     const idx = gMeme.selectedLineIdx
     gMeme.lines[idx].txt = txt
@@ -128,17 +131,25 @@ function selectLine(clickedPos) {
         })
 }
 
-function saveMeme(){
+function saveMeme(dataUrl){
     const savedMemes = loadFromStorage('savedMemes') || []
+    gMeme.dataUrl = dataUrl
 
     savedMemes.push(gMeme)
     saveToStorage('savedMemes', savedMemes)
-    console.log('savedMemes:', savedMemes)
 }
 
-function getMemes(){
-    gMemes = loadFromStorage('savedMemes') || []
-    return gMemes
+function deleteMeme(index) {
+    let savedMemes = loadFromStorage('savedMemes') || []
+    savedMemes.splice(index, 1)
+
+    saveToStorage('savedMemes', savedMemes)
+    renderSavedMemes(savedMemes)
+}
+
+function getSavedMemes(){
+    gSavedMemes = loadFromStorage('savedMemes') || []
+    return gSavedMemes
 }
 
 

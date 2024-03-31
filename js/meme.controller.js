@@ -7,6 +7,7 @@ let gIsDragging = false
 
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
+
 function renderEditor() {
     gElCanvas = document.querySelector('.canvas-editor')
     gCtx = gElCanvas.getContext('2d')
@@ -53,17 +54,6 @@ function onSelectLine(ev) {
     renderMeme()
     const elTxt = document.querySelector('.txt');
     elTxt.focus()
-    
-}
-
-function cleanSelectedFrame() {
-    const meme = getMeme()
-
-    meme.lines.forEach((line, index) => {
-        if (index === meme.selectedLineIdx) {
-            drawSelectedFrame(line)
-        }
-    })
     
 }
 
@@ -139,14 +129,12 @@ function resetEditorStyle() {
     document.querySelector('.txt').value = ''
     document.querySelector('.fa-brush').style.color = '#000000'
     document.querySelector('.fa-fill-drip').style.color = '#ffffff'
-
     document.querySelector('.font-family').value = 'Ariel'
-    
 }
 
-function onAddTxt(elTxt) {
+function onChangeTxt(elTxt) {
     const txt = elTxt.value
-    setLineTxt(txt)
+    changeLineTxt(txt)
     renderMeme()
 }
 
@@ -285,56 +273,78 @@ function onUp() {
 }
 
 function showSaved() {
-    document.querySelector('.gallery-page').classList.add('hidden')
-    document.querySelector('.editor-page').classList.add('hidden')
-    document.querySelector('.saved-page').classList.remove('hidden')
+    togglePages('.saved-page')
     hideNav()
 
-    const savedMemes = getMemes()
+    const savedMemes = getSavedMemes()
     renderSavedMemes(savedMemes)
     
 }
 
 function onSaveMeme() {
-    saveMeme()
+    renderMeme(true)
+    const dataUrl = gElCanvas.toDataURL()
+
+    saveMeme(dataUrl)
     const saveMsg = document.querySelector('.save-msg')
     saveMsg.classList.remove('hidden')
-    setTimeout(function() {
+    setTimeout(() => {
         saveMsg.classList.add('hidden')
     }, 3000)
-    console.log('saved meme' )
+
+    renderMeme()
 }
 
 
 function renderSavedMemes(savedMemes) {
     const savedContainer = document.querySelector('.saved-container')
+
+    var strHtmls = savedMemes.map((savedMeme, index) => `
+        <article class="saved-meme">
+            <img src="${savedMeme.dataUrl}"
+            onclick="onMemeSelect(${index})">
+            <button class="delete-seved-meme" 
+                onclick="toggleModal(${index}, 1)">
+                <i class="fa-solid fa-trash"></i>
+            </button> 
+            <div class="modal hidden">
+                <p>Are you sure you want to delete the meme?</p>
+                <div class="modal-buttons">
+                    <button class="confirm-delete" 
+                        onclick="onDeleteSavedMeme(${index}, true)">Yes
+                    </button>
+                    <button class="cancel-delete" 
+                        onclick="onDeleteSavedMeme(${index}, false)">No
+                    </button>
+                </div>
+            </div>
+        </article>
+    `)
+
+    savedContainer.innerHTML = strHtmls.join('')
+
+}
+
+function onMemeSelect(index) {
+    const savedMemes = getSavedMemes()
+    const selectedMeme = savedMemes[index]
+
+    togglePages('.editor-page')
+    setMeme(selectedMeme)
     
-    savedContainer.innerHTML = ''
-
-    const imgs = getImgs()
-
-    savedMemes.forEach(savedMeme => {
-        
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-        canvas.classList.add('saved-meme-canvas')
-        canvas.width = gElCanvas?.width || 400
-        canvas.height = gElCanvas?.height || 400
-
-        const elImg = new Image()
-        elImg.src = imgs[savedMeme.selectedImgId].url
-        
-        //  elImg.onload = function() {
-            ctx.drawImage(elImg, 0, 0, canvas.width, canvas.height)
-        
-            savedMeme.lines.forEach(line => {
-                drawText(line, ctx)
-            })
-        //  }
+    renderEditor()
     
-        savedContainer.appendChild(canvas)
-    })
+}
 
+function toggleModal(index ,dir) {
+    const elModal = document.querySelectorAll('.modal')[index]
+    if (dir === 1) elModal.classList.remove('hidden')
+    if (dir === -1) elModal.classList.add('hidden')
+}
+
+function onDeleteSavedMeme(index, canBeDeleted) {
+    if (canBeDeleted) deleteMeme(index)
+    toggleModal(index, -1)
 }
 
 function onShareMeme() {
