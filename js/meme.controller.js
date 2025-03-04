@@ -383,7 +383,6 @@ function doUploadImg(imgDataUrl, onSuccess) {
 
         // If the response is ok, call the onSuccess callback function, 
         // that will create the link to facebook using the url we got
-        // console.log('Got back live url:', url)
         onSuccess(url)
     }
     XHR.onerror = (req, ev) => {
